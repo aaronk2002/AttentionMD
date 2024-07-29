@@ -1,4 +1,5 @@
 results*
 playground.ipynb
 dataset/*
+tokenizer/*
 *__pycache__
