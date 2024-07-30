@@ -136,11 +136,11 @@ class TransformerClassifier(nn.Module):
         if self.agg == "mean":
             if self.mask:
                 mask = mask.view(B, T, 1)
-                x = x.masked_fill_(mask.logical_not(), 0)
+                x.masked_fill_(mask.logical_not(), 0)
             x = torch.mean(x, dim=-2)
             if self.mask:
                 x = x * T
-                x = x * torch.sum(mask.view(B, T), dim=-1).view(B, 1)
+                x = x / torch.sum(mask.view(B, T), dim=-1).view(B, 1)
         else:
             x = x[:, 0, :]
 
