@@ -113,7 +113,7 @@ def train_model(config):
             print(f"    Test Loss = {test_loss[-1]} Test Accuracy = {test_acc[-1]}")
 
             # Stopping condition
-            if train_acc[-1] == 1.0:
+            if train_acc[-1] >= (config.train_acc_lim or 1.0):
                 break
 
         # Save result

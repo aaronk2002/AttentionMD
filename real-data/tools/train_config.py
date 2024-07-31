@@ -32,6 +32,9 @@ class TrainConfig:
         self.mask = False
         if "mask" in data:
             self.mask = data["mask"]
+        self.train_acc_lim = None
+        if "train_acc_lim" in data:
+            self.train_acc_lim = data["train_acc_lim"]
 
     def __str__(self):
         return (
@@ -57,4 +60,5 @@ class TrainConfig:
             + f"\nfinal_rep_agg = {self.final_rep_agg}"
             + f"\nscale = {self.scale}"
             + f"\nmask = {self.mask}"
+            + f"\ntrain_acc_lim = {self.train_acc_lim}"
         )
