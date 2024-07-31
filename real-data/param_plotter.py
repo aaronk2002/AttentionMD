@@ -24,6 +24,8 @@ else:
     parameters = torch.load(args.param)
 
 # Get image
+parameters = parameters.abs()
+parameters = parameters[parameters < 3]
 hist = torch.histogram(parameters, args.bins)
-plt.plot(hist.bin_edges[:-1].detach().numpy(), hist.hist.detach().numpy())
+plt.stairs(hist.hist.detach().numpy(), hist.bin_edges.detach().numpy(), fill=True)
 plt.savefig(args.img)
