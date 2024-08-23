@@ -3,21 +3,21 @@ import torch
 from transformers import AutoTokenizer
 import os
 
-tokenizer = AutoTokenizer.from_pretrained("../../tokenizer")
+tokenizer = AutoTokenizer.from_pretrained("../tokenizer")
 
 
 class IMDb(Dataset):
     def __init__(self, train, max_length=512, device="cpu"):
         set_dir = "train" if train else "test"
-        pos_files = os.listdir(f"../../dataset/imdb_larger/{set_dir}/pos")
-        neg_files = os.listdir(f"../../dataset/imdb_larger/{set_dir}/neg")
+        pos_files = os.listdir(f"../dataset/imdb_larger/{set_dir}/pos")
+        neg_files = os.listdir(f"../dataset/imdb_larger/{set_dir}/neg")
         self.review = []
         self.label = []
 
         # Get the positive files
         for file in pos_files:
             f = open(
-                f"../../dataset/imdb_larger/{set_dir}/pos/{file}", "r", encoding="UTF-8"
+                f"../dataset/imdb_larger/{set_dir}/pos/{file}", "r", encoding="UTF-8"
             )
             self.review.append(
                 tokenizer(f.read(), padding="max_length", max_length=max_length)[
@@ -29,7 +29,7 @@ class IMDb(Dataset):
         # Get the negative files
         for file in neg_files:
             f = open(
-                f"../../dataset/imdb_larger/{set_dir}/neg/{file}", "r", encoding="UTF-8"
+                f"../dataset/imdb_larger/{set_dir}/neg/{file}", "r", encoding="UTF-8"
             )
             self.review.append(
                 tokenizer(f.read(), padding="max_length", max_length=max_length)[
