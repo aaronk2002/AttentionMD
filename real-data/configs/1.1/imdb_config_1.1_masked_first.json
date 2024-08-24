@@ -7,7 +7,7 @@
     "max_length": 512,
     "epochs": 1000,
     "dropout": 0.2,
-    "lr": 3e-3,
+    "lr": 2e-3,
     "bias": false,
     "from_prev_result": false,
     "dataset": "IMDb",
