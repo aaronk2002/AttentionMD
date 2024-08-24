@@ -1,4 +1,5 @@
-results*
+*.pt
+*.jpg
 playground.ipynb
 dataset/*
 tokenizer/*
