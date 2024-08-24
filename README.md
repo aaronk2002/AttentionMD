@@ -1,6 +1,6 @@
-# Repository for [TITLE] paper
+# Repository for "Optimizing Attention with Mirror Descent: Generalized Max-Margin Token Selection" paper
 
-This repository contains the codebase for the experiments done within the paper [TITLE]. The library requirements is as followed
+This repository contains the codebase for the experiments done within the paper "Optimizing Attention with Mirror Descent: Generalized Max-Margin Token Selection". The library requirements is as followed
 ```
 torch==2.0.0
 numpy==1.24.3
