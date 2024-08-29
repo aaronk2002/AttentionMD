@@ -1,6 +1,4 @@
-*.pt
 *.jpg
 playground.ipynb
-dataset/*
-tokenizer/*
+*.txt
 *__pycache__
