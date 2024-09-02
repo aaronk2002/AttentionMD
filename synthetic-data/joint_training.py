@@ -15,13 +15,13 @@ lr, p, epochs = args.lr, args.p, args.epochs
 
 # Data
 n, T, d = 2, 3, 2
+device = "cuda" if torch.cuda.is_available() else "cpu"
 X = torch.Tensor(
     [[[-2.7, 1.2], [1.4, 2.1], [1.3, -0.1]], [[0.4, -2.2], [-1.1, -0.4], [0.9, 0.1]]]
-).double()
-Y = torch.Tensor([1, -1]).double()
-z = torch.Tensor([X[0, 0].tolist(), X[1, 0].tolist()]).double()
-v = torch.zeros((d,)).double()
-device = "cuda" if torch.cuda.is_available() else "cpu"
+).double().to(device)
+Y = torch.Tensor([1, -1]).double().to(device)
+z = torch.Tensor([X[0, 0].tolist(), X[1, 0].tolist()]).double().to(device)
+v = torch.zeros((d,)).double().to(device)
 
 result = full_train(X, Y, z, v, epochs, lr, p, True, "VW", device, 0)
 torch.save(result, args.output)

@@ -41,21 +41,19 @@ def full_train(
 
     # Train
     optimizer = SMD(params, p, normalized)
-    Ws = np.zeros((epochs + 1, d, d))
-    vs = np.zeros((epochs + 1, d))
-    losses = np.zeros((epochs,))
-    softmax_prob = np.zeros((epochs,))
-    logistic_prob = np.zeros((epochs,))
+    Ws = torch.zeros(epochs + 1, d, d).to(device).double()
+    vs = torch.zeros(epochs + 1, d).to(device).double()
+    losses = torch.zeros(epochs).to(device).double()
+    softmax_prob = torch.zeros(epochs).to(device).double()
+    logistic_prob = torch.zeros(epochs).to(device).double()
     Ws[0] = (
         (
             model.W.weight.detach().T
             if parameterization == "W" or parameterization == "VW"
             else model.Q.weight.T.mm(model.K.weight).T.detach()
         )
-        .to("cpu")
-        .numpy()
     )
-    vs[0] = model.v.data.detach().to("cpu").numpy()
+    vs[0] = model.v.data.detach()
     for it in tqdm(range(epochs)):
 
         # Zero out gradient
@@ -77,12 +75,11 @@ def full_train(
             if parameterization == "W" or parameterization == "VW"
             else model.Q.weight.T.mm(model.K.weight).T.detach()
         )
-        W = W.to("cpu").numpy()
         sfx_out = model.sfx_out.detach().max(dim=-1)
         ids = sfx_out[1]
-        softmax_prob[it] = sfx_out[0].numpy().mean()
+        softmax_prob[it] = sfx_out[0].mean()
         Ws[it + 1] = W
-        vs[it + 1] = model.v.data.detach().to("cpu").numpy()
+        vs[it + 1] = model.v.data.detach()
         losses[it] = loss.item()
 
         # Logistic probability calculation
@@ -90,9 +87,9 @@ def full_train(
         for sample in range(n):
             logistic_prob[it] += 1 / (
                 1
-                + np.exp(
+                + torch.exp(
                     -Y[sample] * X[sample, ids[sample]].reshape(1, -1) @ vs[it + 1]
-                )
+                ).item()
             )
         logistic_prob[it] /= n
 
@@ -111,10 +108,10 @@ def full_train(
 
     return {
         "att-svm": sol_att_svm,
-        "Ws": Ws,
-        "vs": vs,
-        "losses": losses,
-        "sfx_prob": softmax_prob,
-        "log_prob": logistic_prob,
+        "Ws": Ws.to("cpu").numpy(),
+        "vs": vs.to("cpu").numpy(),
+        "losses": losses.to("cpu").numpy(),
+        "sfx_prob": softmax_prob.to("cpu").numpy(),
+        "log_prob": logistic_prob.to("cpu").numpy(),
         "alpha": ids,
     }
