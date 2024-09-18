@@ -1,14 +1,18 @@
 # Real Data Experiments for "Optimizing Attention with Mirror Descent: Generalized Max-Margin Token Selection" Paper
 
 This folder contains the code for the experiments that uses the [Stanford Large Movie Dataset](https://ai.stanford.edu/~amaas/data/sentiment/).
-To run the experiments, you must first download the dataset from their website and get the tokenizer.
-For the tokenizer, you can run the `tokenizer_downloader.ipynb`, this is optional as the repo will already have the tokenizer downloaded in the `tokenizer` folder.
-For the dataset, once you have downloaded the .tar file, unzip and move the `test` and `train` folder into a new folder called `dataset/imdb_larger`, now you are ready to run the experiment.
+The experiment requires you to first download the dataset from their website as a .tar file.
+Once you have downloaded the .tar file, unzip and move the `test` and `train` folder into a new folder called `dataset/imdb_larger`.
+This experiment will train several models and save them in the `results` folder, and to make the saving process successful, you must first make a `results/3` directory, and make a `masked_first`, `masked_mean`, and `mean` directories in each of `results/1.1`, `results/2`, and `results/3`.
 
 To run the experiment, simply run the bash scripts in the `bash_scripts` folder, each of them trains 10 models with randomized initialization using either $\ell_{1.1}$, $\ell_2$, or $\ell_3$-MD and one of the three token representation aggregation methods described in the paper.
 There are 9 possible combination of algorithm and aggregation, hence 9 different bash scripts. Each of the resulting model and training and testing losses and accuracy history are stored in `results`.
 You can then get the average and standard deviation test accuracy for each of the 9 different settings using `test_acc.ipynb`, visualize the histogram of parameters
 for the model using `histogram.ipynb`, and the resulting attention map using `attn_map.ipynb`.
+
+We recommend using GPUs to run the training scripts as each epoch could take around half an hour to run when we only used CPUs. We used V100 GPUs specifically, provided by [MIT Supercloud](https://supercloud.mit.edu/acknowledging-mit-supercloud/)
+
+## Additional Details
 
 These scripts run the `train.py` python script using configurations from `config`, and if you would like to use different configurations, here are some of the configuration parameters that you can tinker around with along with their explanations:
 - `n_embd`: int, the dimensionality of token embeddings
@@ -32,5 +36,7 @@ These scripts run the `train.py` python script using configurations from `config
 - `mask`: bool, whether we mask the input
 - `train_acc_limit`: float between 0 and 1, stops training when training accuracy reaches this value
 - `final_rep_agg`: str `"mean"` or `"first"`, if `"mean"` then the last layer of the classification model aggregates the token embedding by averaging them, otherwise that last layer just takes the first `[CLS]` token embedding
+
+The tokenizer is in the `tokenizer` folder, which was downloaded using the `tokenizer_downloader.ipynb` notebook.
 
 Certain parts of the transformer model used here are adapted from the [nanoGPT](https://github.com/karpathy/nanoGPT) repository.
