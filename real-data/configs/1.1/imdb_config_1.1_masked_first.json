@@ -13,11 +13,8 @@
     "dataset": "IMDb",
     "prev_result_filename": "",
     "outfile": "../results/1.1/masked_first",
-    "misc": {},
     "batch_size": 100,
     "p": 1.1,
     "repeat": 10,
-    "final_rep_agg": "first",
-    "mask": true,
     "train_acc_lim": 0.995
 }

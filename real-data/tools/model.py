@@ -17,8 +17,6 @@ class SelfAttention(nn.Module):
         self.n_head = config.n_head
         self.n_embd = config.n_embd
         self.dropout = config.dropout
-        self.scale = config.scale
-        self.mask = config.mask
 
     def forward(self, x, mask, device):
         # The batch size, sequence length, and embedding dim
@@ -32,14 +30,13 @@ class SelfAttention(nn.Module):
         v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2)
 
         # Get the attention results
-        scale_factor = 1 / math.sqrt(q.size(-1)) if self.scale is None else self.scale
+        scale_factor = 1 / math.sqrt(q.size(-1))
         attn_weight = q @ k.transpose(-2, -1) * scale_factor
-        if self.mask:
-            attn_bias = torch.zeros(B, T, T, dtype=q.dtype).to(device)
-            mask = mask.view(B, 1, T) & mask.view(B, T, 1)
-            mask[:, :, 0] = True
-            attn_bias.masked_fill_(mask.logical_not(), float("-inf"))
-            attn_weight += attn_bias.view(B, 1, T, T)
+        attn_bias = torch.zeros(B, T, T, dtype=q.dtype).to(device)
+        mask = mask.view(B, 1, T) & mask.view(B, T, 1)
+        mask[:, :, 0] = True
+        attn_bias.masked_fill_(mask.logical_not(), float("-inf"))
+        attn_weight += attn_bias.view(B, 1, T, T)
         attn_weight = torch.softmax(attn_weight, dim=-1).nan_to_num(
             nan=0, posinf=0, neginf=0
         )
@@ -120,7 +117,6 @@ class TransformerClassifier(nn.Module):
         self.blocks = nn.Sequential(*[Block(config) for _ in range(config.n_blocks)])
         self.agg = config.final_rep_agg
         self.lin = nn.Linear(config.n_embd, 1, bias=config.bias)
-        self.mask = config.mask
 
     def forward(self, x, device):
         # Embed
@@ -132,17 +128,8 @@ class TransformerClassifier(nn.Module):
         for block in self.blocks:
             x = block(x, mask, device)
 
-        # Aggregate the results of the blocks
-        if self.agg == "mean":
-            if self.mask:
-                mask = mask.view(B, T, 1)
-                x.masked_fill_(mask.logical_not(), 0)
-            x = torch.mean(x, dim=-2)
-            if self.mask:
-                x = x * T
-                x = x / torch.sum(mask.view(B, T), dim=-1).view(B, 1)
-        else:
-            x = x[:, 0, :]
+        # Take the first token
+        x = x[:, 0, :]
 
         # Get the final probability
         x = self.lin(x)
