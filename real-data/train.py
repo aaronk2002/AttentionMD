@@ -10,7 +10,7 @@ os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 os.environ["TORCH_USE_CUDA_DSA"] = "1"
 
 from tools.model import TransformerClassifier
-from tools.dataset_classes import IMDb
+from tools.dataset_classes import SentimentAnalysisData
 from tools.train_config import TrainConfig
 from tools.optimizer import SMD
 
@@ -19,10 +19,9 @@ def get_dataset(dataset, max_length=512, device="cpu"):
     """
     Get the dataset
     """
-    if dataset == "IMDb":
-        return IMDb(True, max_length, device), IMDb(False, max_length, device)
-    else:
-        raise NotImplementedError()
+    return SentimentAnalysisData(
+        dataset, True, max_length, device
+    ), SentimentAnalysisData(dataset, False, max_length, device)
 
 
 def train_model(config):
