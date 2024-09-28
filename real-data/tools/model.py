@@ -115,7 +115,6 @@ class TransformerClassifier(nn.Module):
         self.emb_static = nn.Embedding(config.vocab_size, config.n_embd)
         self.emb_pos = nn.Embedding(config.max_length, config.n_embd)
         self.blocks = nn.Sequential(*[Block(config) for _ in range(config.n_blocks)])
-        self.agg = config.final_rep_agg
         self.lin = nn.Linear(config.n_embd, 1, bias=config.bias)
 
     def forward(self, x, device):
