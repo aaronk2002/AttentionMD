@@ -5,4 +5,4 @@ source /etc/profile
 module load anaconda/2023a-pytorch
 module load cuda/11.8
 
-python3 ../train.py --config ../configs/2/imdb_config_2_masked_first.json
+python3 ../train.py --config ../configs/1.1/model_size_6.json

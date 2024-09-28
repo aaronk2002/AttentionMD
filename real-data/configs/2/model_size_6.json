@@ -12,9 +12,9 @@
     "from_prev_result": false,
     "dataset": "IMDb",
     "prev_result_filename": "",
-    "outfile": "../results/1.1/masked_first",
+    "outfile": "../results/2/6",
     "batch_size": 100,
-    "p": 1.1,
+    "p": 2,
     "repeat": 10,
     "train_acc_lim": 0.995
 }

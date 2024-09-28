@@ -1,0 +1,20 @@
+{
+    "n_embd": 384,
+    "n_blocks": 4,
+    "n_head": 4,
+    "n_hidden": 1536,
+    "vocab_size": 30522,
+    "max_length": 512,
+    "epochs": 1000,
+    "dropout": 0.2,
+    "lr": 1e-5,
+    "bias": false,
+    "from_prev_result": false,
+    "dataset": "IMDb",
+    "prev_result_filename": "",
+    "outfile": "../results/2/4",
+    "batch_size": 100,
+    "p": 2,
+    "repeat": 10,
+    "train_acc_lim": 0.995
+}
