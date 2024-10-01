@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Loading Modules in Supercloud
-source /etc/profile
-module load anaconda/2023b
-module load cuda/11.8
-
 # Variables
 parameterization=W
 att_svm_p=( 2 1_75 1_75 3 3 2 1_75 2 3 ) 
