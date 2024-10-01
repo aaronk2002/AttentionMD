@@ -10,7 +10,7 @@ There are 9 possible combination of algorithm and model sizes, hence 9 different
 You can then get the average and standard deviation test accuracy for each of the 9 different settings using `test_acc.ipynb`, visualize the histogram of parameters
 for the model using `histogram.ipynb`, and the resulting attention map using `attn_map.ipynb`.
 
-We recommend using GPUs to run the training scripts as each epoch could take around half an hour to run when we only used CPUs. We used V100 GPUs specifically, provided by [MIT Supercloud](https://supercloud.mit.edu/acknowledging-mit-supercloud/)
+We recommend using GPUs to run the training scripts as each epoch could take around half an hour to run when we only used CPUs. We used V100 GPUs specifically.
 
 ## Additional Details
 
