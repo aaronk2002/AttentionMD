@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Loading Modules in Supercloud
-source /etc/profile
-module load anaconda/2023b
-module load cuda/11.8
-
 # Aggregated Result
 for seed in {1..100}
 do
