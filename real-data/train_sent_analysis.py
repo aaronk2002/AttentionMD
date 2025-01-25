@@ -9,7 +9,7 @@ import os
 os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 os.environ["TORCH_USE_CUDA_DSA"] = "1"
 
-from tools.model import TransformerClassifier
+from tools.sent_analysis_model import TransformerClassifier
 from tools.dataset_classes import SentimentAnalysisData
 from tools.train_config import TrainConfig
 from tools.optimizer import SMD
