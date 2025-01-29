@@ -46,3 +46,4 @@ Certain parts of the transformer model used here are adapted from the [nanoGPT](
 This experiment compares the performance of $\ell_{1.1}$-MD and Adam algorithms in training a ViT model on CIFAR-10.
 To run the experiment, first run the two bash scripts `vit_adam.sh` and `vit_md.sh` in `bash_scripts` to train the models on Adam and $\ell_{1.1}$-MD, respectively.
 The two scripts will save the results in `out_adam.pt` and `out_md.pt`, which can be visualized using `vit_plotters.ipynb`.
+Vision Transformer code adapted from [kentaroy47](https://github.com/kentaroy47/vision-transformers-cifar10)
