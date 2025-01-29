@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 
+# Code adapted from https://github.com/kentaroy47/vision-transformers-cifar10
 
 def pair(t):
     return t if isinstance(t, tuple) else (t, t)

@@ -10,8 +10,8 @@ import numpy as np
 import torchvision
 import torchvision.transforms as transforms
 
-from tools.vit_model import ViT
-from tools.optimizer import SMD
+from model import ViT
+from optimizer import SMD
 
 # Get args
 parser = argparse.ArgumentParser()
@@ -36,9 +36,9 @@ transform_test = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
 ])
-trainset = torchvision.datasets.CIFAR100(root='./data', train=True, download=True, transform=transform_train)
+trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=100, shuffle=True, num_workers=8)
-testset = torchvision.datasets.CIFAR100(root='./data', train=False, download=True, transform=transform_test)
+testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform_test)
 testloader = torch.utils.data.DataLoader(testset, batch_size=100, shuffle=False, num_workers=8)
 print("Got dataloader")
 
@@ -46,7 +46,7 @@ print("Got dataloader")
 model = ViT(
     image_size = 48,
     patch_size = 4,
-    num_classes = 100,
+    num_classes = 10,
     dim = 512,
     depth = 6,
     heads = 8,

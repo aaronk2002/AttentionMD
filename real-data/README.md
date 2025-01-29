@@ -1,18 +1,21 @@
 # Real Data Experiments for "Optimizing Attention with Mirror Descent: Generalized Max-Margin Token Selection" Paper
 
-This folder contains the code for the experiments that uses the [Stanford Large Movie Dataset](https://ai.stanford.edu/~amaas/data/sentiment/).
+This folder contains the code for the experiments that trains models on the [Stanford Large Movie Dataset](https://ai.stanford.edu/~amaas/data/sentiment/) and CIFAR-10 dataset.
+
+## Stanford Large Movie Dataset
+
 The experiment requires you to first download the dataset from their website as a .tar file.
 Once you have downloaded the .tar file, unzip and move the `test` and `train` folder into a new folder called `dataset/IMDb`.
 This experiment will train several models and save them in the `results` folder.
 
-To run the experiment, simply run the bash scripts in the `bash_scripts` folder, each of them trains 10 models with randomized initialization using either $\ell_{1.1}$, $\ell_2$, or $\ell_3$-MD and one of the three different model sizes.
+To run the experiment, simply run the bash scripts from the `bash_scripts` folder, each of them trains 10 models with randomized initialization using either $\ell_{1.1}$, $\ell_2$, or $\ell_3$-MD and one of the three different model sizes.
 There are 9 possible combination of algorithm and model sizes, hence 9 different bash scripts. Each of the resulting model and training and testing losses and accuracy history are stored in `results`.
 You can then get the average and standard deviation test accuracy for each of the 9 different settings using `test_acc.ipynb`, visualize the histogram of parameters
 for the model using `histogram.ipynb`, and the resulting attention map using `attn_map.ipynb`.
 
 We recommend using GPUs to run the training scripts as each epoch could take around half an hour to run when we only used CPUs. We used V100 GPUs specifically, and we acquired them from [MIT Supercloud](https://supercloud.mit.edu/)
 
-## Additional Details
+### Additional Details
 
 These scripts run the `train.py` python script using configurations from `config`, and if you would like to use different configurations, here are some of the configuration parameters that you can tinker around with along with their explanations:
 - `n_embd`: int, the dimensionality of token embeddings
@@ -37,3 +40,9 @@ These scripts run the `train.py` python script using configurations from `config
 The tokenizer is in the `tokenizer` folder, which was downloaded using the `tokenizer_downloader.ipynb` notebook.
 
 Certain parts of the transformer model used here are adapted from the [nanoGPT](https://github.com/karpathy/nanoGPT) repository.
+
+## CIFAR-10
+
+This experiment compares the performance of $\ell_{1.1}$-MD and Adam algorithms in training a ViT model on CIFAR-10.
+To run the experiment, first run the two bash scripts `vit_adam.sh` and `vit_md.sh` in `bash_scripts` to train the models on Adam and $\ell_{1.1}$-MD, respectively.
+The two scripts will save the results in `out_adam.pt` and `out_md.pt`, which can be visualized using `vit_plotters.ipynb`.
