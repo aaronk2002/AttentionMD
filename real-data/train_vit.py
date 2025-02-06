@@ -10,8 +10,8 @@ import numpy as np
 import torchvision
 import torchvision.transforms as transforms
 
-from model import ViT
-from optimizer import SMD
+from tools.vit_model import ViT
+from tools.optimizer import SMD
 
 # Get args
 parser = argparse.ArgumentParser()
